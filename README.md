@@ -9,7 +9,7 @@
 ```
 html-anything | DeepSeek V4 Pro | thinking:on | effort:max | 16%
 /Users/ouxingxing/Desktop/project
-main | f0671e8 修复 BUG (#78) | 3分支 | https://github.com/user/repo.git
+main | f0671e8 修复 BUG (#78) | 2未暂存 | 1未跟踪 | 3分支 | https://github.com/user/repo.git
 * f0671e8 (HEAD -> main) 修复 BUG (#78)
 * 2be9310 fix: validate header
 ```
@@ -18,7 +18,7 @@ main | f0671e8 修复 BUG (#78) | 3分支 | https://github.com/user/repo.git
 |---|---|
 | 1 | 目录名 \| 模型名 \| thinking:on/off \| effort:级别 \| 上下文使用% |
 | 2 | 当前工作目录绝对路径 |
-| 3 | Git 分支 \| 最近 commit \| 分支数 \| remote 地址 |
+| 3 | Git 分支 \| 最近 commit \| 未暂存文件数 \| 未跟踪文件数 \| 分支数 \| remote 地址 |
 | 4 | `git log --graph --oneline --decorate -2` |
 
 非 git 仓库时第 3 行显示「无git仓库」。
@@ -60,6 +60,8 @@ bash install.sh
 | `工作目录` | 当前工作目录的绝对路径 |
 | `Git 分支` | 当前所在分支名 |
 | `最近 commit` | 最新一次提交的 hash + message（截取前 60 字符） |
+| `未暂存文件数` | 已修改但未 `git add` 的文件数量（`git diff --name-only`） |
+| `未跟踪文件数` | 完全未被 git 跟踪的新文件数量（`git ls-files --others --exclude-standard`） |
 | `分支数` | 本地分支总数 |
 | `remote` | origin 远程仓库地址 |
 | `Git graph` | 最近 2 条 commit 的图形化历史 |

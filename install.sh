@@ -80,13 +80,15 @@ if [ -z "$GIT_RESULT" ]; then
     if git -C "$CWD" rev-parse --git-dir >/dev/null 2>&1; then
         BRANCH=$(git -C "$CWD" branch --show-current 2>/dev/null || echo "HEAD")
         COMMIT=$(git -C "$CWD" log -1 --format="%h %s" 2>/dev/null | cut -c1-60)
+        UNSTAGED=$(git -C "$CWD" diff --name-only 2>/dev/null | wc -l | tr -d ' ')
+        UNTRACKED=$(git -C "$CWD" ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ')
         BCOUNT=$(git -C "$CWD" branch 2>/dev/null | wc -l | tr -d ' ')
         REMOTE=$(git -C "$CWD" remote get-url origin 2>/dev/null || echo "无remote")
         GRAPH=$(git -C "$CWD" log --graph --oneline --decorate -2 2>/dev/null)
         {
             echo "$NOW"
             echo "${CWD}"
-            echo "${BRANCH} | ${COMMIT} | ${BCOUNT}分支 | ${REMOTE}"
+            echo "${BRANCH} | ${COMMIT} | ${UNSTAGED}未暂存 | ${UNTRACKED}未跟踪 | ${BCOUNT}分支 | ${REMOTE}"
             echo "${GRAPH}"
         } > "$CACHE_FILE"
         GIT_RESULT=$(tail -n +3 "$CACHE_FILE")
@@ -180,7 +182,7 @@ echo ""
 echo "配置的 4 行信息："
 echo "  Line 1: 目录名 | 模型名 | thinking:on/off | effort:级别 | 上下文%"
 echo "  Line 2: 当前工作目录绝对路径"
-echo "  Line 3: Git分支 | 最近commit | 分支数 | remote地址"
+echo "  Line 3: Git分支 | 最近commit | 未暂存文件数 | 未跟踪文件数 | 分支数 | remote地址"
 echo "  Line 4: Git graph（最近2条commit）"
 echo ""
 echo "下次与 Claude Code 交互时自动生效。"
